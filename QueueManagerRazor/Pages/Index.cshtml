@@ -1,0 +1,108 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "QManager";
+    var tellerNumber = ViewData["TellerNumber"];
+    var tokenNumberToBeServed = ViewData["TokenToServe"];
+    var queue = Model._repository.ShowQueue();
+    var next1 = ViewData["Next1"];
+    var next2 = ViewData["Next2"];
+    var next3 = ViewData["Next3"];
+}
+
+<table style="border:1px solid black; font-family:Arial; text-align:center; margin: 0 auto;">
+    <tr>
+        <td>
+            <b>Teller 1</b>
+        </td>
+        <td>
+            <b>Teller 2</b>
+        </td>
+        <td>
+            <b>Teller 3</b>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @if (queue.Count == 0)
+            {
+                <input disabled class="form-control teller t1" placeholder="Waiting..."/>
+            }else
+            {
+                <input disabled class="form-control teller t1" placeholder="@next1"/>
+            }
+        </td>
+        <td>
+            @if (queue.Count == 0)
+            {
+                <input disabled class="form-control teller t2" placeholder="Waiting..."/>
+            }else
+            {
+                <input disabled class="form-control teller t2" placeholder="@next2"/>
+            }
+        </td>
+        <td>
+            @if (queue.Count == 0)
+            {
+                <input disabled class="form-control teller t3" placeholder="Waiting..."/>
+            }else
+            {
+                <input disabled class="form-control teller t3" placeholder="@next3"/>
+            }
+        </td>
+    </tr>
+    <tr>
+        <form method="post" asp-page-handler="Teller1Click">
+        <td>
+            <button type="submit" class="btn btn-primary">Next</button>
+        </td>
+        </form>
+        <form method="post" asp-page-handler="Teller2Click">
+        <td>
+            <button type="submit" class="btn btn-primary">Next</button>
+        </td>
+        </form>
+        <form method="post" asp-page-handler="Teller3Click">
+        <td>
+            <button type="submit" class="btn btn-primary">Next</button>
+        </td>
+        </form>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <input type="text" disabled class="form-control queue"
+                   placeholder="Token Number: @tokenNumberToBeServed Please go to Teller @tellerNumber" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <textarea disabled style="width:110px; height:120px;">
+                @foreach (var item in queue)
+                {
+                    @item
+                    @Html.Raw("\n")
+                }
+            </textarea>
+        </td>
+    </tr>
+    <tr>
+        <form method="post" asp-page-handler="AddToQueue">
+        <td colspan="3">
+            <button type="submit" class="btn btn-info" style="width:110px">Print Token</button>
+        </td>
+        </form>
+    </tr>
+    <tr>
+        <td colspan="3">
+            @if (queue.Count() > 0)
+            {
+                <label id="lblCurrentStatus">There are @queue.Count() customers before you in a queue</label>
+            }
+            else
+            {
+                <label>No cutomers in Queue</label>
+            }
+        </td>
+    </tr>
+</table>

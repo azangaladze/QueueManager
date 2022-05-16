@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "QueueManagerRazor/1.0.0": {
+        "runtime": {
+          "QueueManagerRazor.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "QueueManagerRazor/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
