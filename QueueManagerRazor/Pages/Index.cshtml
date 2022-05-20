@@ -11,6 +11,7 @@
     var next3 = ViewData["Next3"];
 }
 
+
 <table style="border:1px solid black; font-family:Arial; text-align:center; margin: 0 auto;">
     <tr>
         <td>
@@ -25,30 +26,45 @@
     </tr>
     <tr>
         <td>
-            @if (queue.Count == 0)
+            @if (queue.Count >= 0 && next1 is not null)
             {
-                <input disabled class="form-control teller t1" placeholder="Waiting..."/>
-            }else
+                <input disabled class="form-control teller t1" placeholder="@next1" />
+            }
+            else if (next1 is null && queue.Count == 0)
             {
-                <input disabled class="form-control teller t1" placeholder="@next1"/>
+                <input disabled class="form-control teller t1" placeholder="No Customers..." />
+            }
+            else
+            {
+                <input disabled class="form-control teller t1" placeholder="Waiting..." />
             }
         </td>
         <td>
-            @if (queue.Count == 0)
+            @if (queue.Count >= 0 && next2 is not null)
             {
-                <input disabled class="form-control teller t2" placeholder="Waiting..."/>
-            }else
+                <input disabled class="form-control teller t2" placeholder="@next2" />
+            }
+            else if (next2 is null && queue.Count == 0)
             {
-                <input disabled class="form-control teller t2" placeholder="@next2"/>
+                <input disabled class="form-control teller t2" placeholder="No Customers..." />
+            }
+            else
+            {
+                <input disabled class="form-control teller t2" placeholder="Waiting..." />
             }
         </td>
         <td>
-            @if (queue.Count == 0)
+            @if (queue.Count >= 0 && next3 is not null)
             {
-                <input disabled class="form-control teller t3" placeholder="Waiting..."/>
-            }else
+                <input disabled class="form-control teller t3" placeholder="@next3" />
+            }
+            else if (next3 is null && queue.Count == 0)
             {
-                <input disabled class="form-control teller t3" placeholder="@next3"/>
+                <input disabled class="form-control teller t3" placeholder="No Customers..." />
+            }
+            else
+            {
+                <input disabled class="form-control teller t3" placeholder="Waiting..." />
             }
         </td>
     </tr>
@@ -71,8 +87,17 @@
     </tr>
     <tr>
         <td colspan="3">
-            <input type="text" disabled class="form-control queue"
+            @if (tokenNumberToBeServed is null && next1 is null && next2 is null && next3 is null)
+            {
+                <input type="text" disabled class="form-control queue"
+                   placeholder="Press the button below to print your token" />
+            }
+            else
+            {
+                <input type="text" disabled class="form-control queue"
                    placeholder="Token Number: @tokenNumberToBeServed Please go to Teller @tellerNumber" />
+
+            }
         </td>
     </tr>
     <tr>
@@ -97,12 +122,13 @@
         <td colspan="3">
             @if (queue.Count() > 0)
             {
-                <label id="lblCurrentStatus">There are @queue.Count() customers before you in a queue</label>
+                <label id="lblCurrentStatus">There are @(@queue.Count() - 1) customers before you in a queue</label>
             }
             else
             {
-                <label>No cutomers in Queue</label>
+                <label>No Cutomers in Queue</label>
             }
         </td>
     </tr>
 </table>
+
